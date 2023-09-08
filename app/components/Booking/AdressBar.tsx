@@ -1,6 +1,6 @@
-import React ,{useState,useEffect}from 'react'
-// import { DestinationCordiContext } from '@/context/DestinationCordiContext'
-// import { SourceCordiContext } from '@/context/SourceCordiContext'
+import React ,{useState,useEffect, useContext}from 'react'
+import { DestinationCordiContext } from '@/context/DestinationCordiContext'
+import { SourceCordiContext } from '@/context/SourceCordiContext'
 
 const session_token='0f66aaa1-98ef-4261-88a5-fda7bdc08b71';
 const MAPBOX_RETRIVE_URL='https://api.mapbox.com/search/searchbox/v1/retrieve/';
@@ -10,9 +10,9 @@ const AdressBar = () => {
   const [sourceChange,setSourceChange]=useState<any>(false);
   const [destinationChange,setDestinationChange]=useState<any>(false);
 
-  // const {soruceCordinates,setSourceCordinates}=useContext(SourceCordiContext);
-  // const {destinationCordinates,setDestinationCordinates}
-  // =useContext(DestinationCordiContext);
+  const {soruceCordinates,setSourceCordinates}=useContext(SourceCordiContext);
+  const {destinationCordinates,setDestinationCordinates}
+  =useContext(DestinationCordiContext);
 
   const [addressList,setAddressList]=useState<any>([]);
   const [destination,setDistination]=useState<any>([]);
@@ -45,17 +45,17 @@ const AdressBar = () => {
       setAddressList([]);
       setSourceChange(false);
 
-    //   const res=await fetch(MAPBOX_RETRIVE_URL+item.mapbox_id
-    //       +"?session_token="+session_token
-    //       +"&access_token="+process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN)
+      const res=await fetch(MAPBOX_RETRIVE_URL+item.mapbox_id
+          +"?session_token="+session_token
+          +"&access_token="+process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN)
       
-    //   const result=await res.json();
+      const result=await res.json();
       
-      // setSourceCordinates({
-      //     lng:result.features[0].geometry.coordinates[0],
-      //     lat:result.features[0].geometry.coordinates[1], 
-      // })
-      // console.log(result);
+      setSourceCordinates({
+          lng:result.features[0].geometry.coordinates[0],
+          lat:result.features[0].geometry.coordinates[1], 
+      })
+      console.log(result);
   }
 
   const onDestinationAddressClick=async(item:any)=>{
@@ -63,17 +63,17 @@ const AdressBar = () => {
       setAddressList([]);
       setDestinationChange(false);
 
-    //   const res=await fetch(MAPBOX_RETRIVE_URL+item.mapbox_id
-    //       +"?session_token="+session_token
-    //       +"&access_token="+process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN)
+      const res=await fetch(MAPBOX_RETRIVE_URL+item.mapbox_id
+          +"?session_token="+session_token
+          +"&access_token="+process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN)
       
-    //   const result=await res.json();
+      const result=await res.json();
       
-      // setDestinationCordinates({
-      //     lng:result.features[0].geometry.coordinates[0],
-      //     lat:result.features[0].geometry.coordinates[1], 
-      // })
-      // console.log(result);
+      setDestinationCordinates({
+          lng:result.features[0].geometry.coordinates[0],
+          lat:result.features[0].geometry.coordinates[1], 
+      })
+      console.log(result);
   }
   
 return (
@@ -136,5 +136,3 @@ return (
 }
 
 export default AdressBar;
-
-
